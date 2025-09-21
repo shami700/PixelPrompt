@@ -4,6 +4,8 @@ import "dotenv/config";
 import connectDB from "./config/mongodb.js";
 import userRouter from "./routes/userRoutes.js";
 import imageRouter from "./routes/imageRoutes.js"; // Optional
+import path from "path";
+import { fileURLToPath } from "url";
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -15,6 +17,19 @@ await connectDB();
 
 app.use("/api/user", userRouter);
 app.use("/api/image", imageRouter); // Optional
-app.get("/", (req, res) => res.send("API WORKING"));
+
+// --------------------------deployment------------------------------
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+
+// --------------------------deployment------------------------------
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
