@@ -4,8 +4,8 @@
   "description": "[Click here to view the live demo](https://pixelprompt.vercel.app/)",
   "main": "index.js",
   "scripts": {
-    "build": "cd client && npm install && npm run build",
-    "start": "node server/server.js",
+    "build": "cd client && npm install && npm install express && npm run build",
+    "start": "cd server && npm install nodemon -g && npm install express && nodemon server.js",
     "dev": "concurrently \"cd client && npm run dev\" \"cd server && nodemon server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
